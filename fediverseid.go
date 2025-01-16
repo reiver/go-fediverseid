@@ -1,6 +1,7 @@
 package fediverseid
 
 import (
+	"encoding"
 	"fmt"
 	"strings"
 
@@ -12,10 +13,9 @@ const (
 	errAtSignNotFound       = erorr.Error("fediverseid: at-sign not found")
 	errAtSignPrefixNotFound = erorr.Error("fediverseid: at-sign not found")
 	errBadHost              = erorr.Error("fediverseid: bad host")
+	errEmpty                = erorr.Error("fediverseid: empty")
 	errEmptyFediverseID     = erorr.Error("fediverseid: empty fediverse-id")
 	errEmptyHost            = erorr.Error("fediverseid: empty host")
-	errNameNotFound         = erorr.Error("fediverseid: name not found")
-	errHostNotFound         = erorr.Error("fediverseid: host not found")
 )
 
 // FediverseID represents a Fediverse-ID.
@@ -30,6 +30,7 @@ type FediverseID struct {
 
 var _ fmt.Stringer = FediverseID{}
 var _ fmt.GoStringer = FediverseID{}
+var _ encoding.TextMarshaler = FediverseID{}
 
 // CreateFediverseID creates a [FediverseID].
 //
@@ -178,47 +179,16 @@ func (receiver *FediverseID) SetHost(value string) {
 // Else returns an error.
 //
 // Serialize is similar to [String] except that it returns an error if it is invalid.
+//
+// Serialize is also similar to [MarshalText] except that is returns a string rather than a []byte.
 func (receiver FediverseID) Serialize() (string, error) {
-	var name string
-	{
-		var found bool
-		name, found = receiver.name.Get()
-		if !found {
-			var nada string
-			return nada, errNameNotFound
-		}
-	}
-
-	var host string
-	{
-		var found bool
-		host, found = receiver.host.Get()
-		if !found {
-			var nada string
-			return nada, errHostNotFound
-		}
-		if "" == host {
-			var nada string
-			return nada, errEmptyHost
-		}
-	}
-	host = strings.ToLower(host)
-	if badHost(host) {
+	bytes, err := receiver.MarshalText()
+	if nil != err {
 		var nada string
-		return nada, errBadHost
+		return nada, err
 	}
 
-	var buffer [256]byte
-	var p []byte = buffer[0:0]
-
-	{
-		p = append(p, '@')
-		p = append(p, name...)
-		p = append(p, '@')
-		p = append(p, host...)
-	}
-
-	return string(p), nil
+	return string(bytes), nil
 }
 
 // String returns the (serialized) Fediverse-ID, if valid.
@@ -235,4 +205,53 @@ func (receiver FediverseID) String() string {
 	}
 
 	return str
+}
+
+// MarshalText returns the (serialized) Fediverse-ID, if valid.
+// Else returns an error.
+//
+// MarshalText is similar to [Serialize] except that is returns a []byte rather than a string.
+//
+// MarshalText is also similar to [String] except that it returns a []byte and an error if it is invalid.
+//
+// MarshalText also makes [FediverseID] fit the [encoding.TextMarshaler] interface.
+// And thus, among other things, is an alternative to [json.Marshaler].
+func (receiver FediverseID) MarshalText() (text []byte, err error) {
+	if EmptyFediverseID() == receiver {
+		var nada []byte
+		return nada, errEmpty
+	}
+
+	var name string = receiver.name.GetElse("")
+
+	var host string
+	{
+		var found bool
+		host, found = receiver.host.Get()
+		if !found {
+			var nada []byte
+			return nada, errEmptyHost
+		}
+		if "" == host {
+			var nada []byte
+			return nada, errEmptyHost
+		}
+	}
+	host = strings.ToLower(host)
+	if badHost(host) {
+		var nada []byte
+		return nada, errBadHost
+	}
+
+	var buffer [128]byte
+	var p []byte = buffer[0:0]
+
+	{
+		p = append(p, '@')
+		p = append(p, name...)
+		p = append(p, '@')
+		p = append(p, host...)
+	}
+
+	return p, nil
 }
