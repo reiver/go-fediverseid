@@ -224,7 +224,7 @@ func (receiver FediverseID) String() string {
 //
 // MarshalText also makes [FediverseID] fit the [encoding.TextMarshaler] interface.
 // And thus, among other things, is an alternative to [json.Marshaler].
-func (receiver FediverseID) MarshalText() (text []byte, err error) {
+func (receiver FediverseID) MarshalText() ([]byte, error) {
 	if EmptyFediverseID() == receiver {
 		var nada []byte
 		return nada, errEmpty
