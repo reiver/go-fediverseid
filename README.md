@@ -8,6 +8,49 @@ Online documentation, which includes examples, can be found at: http://godoc.org
 
 [![GoDoc](https://godoc.org/github.com/reiver/go-fediverseid?status.svg)](https://godoc.org/github.com/reiver/go-fediverseid)
 
+## Examples
+
+To parse a Fediverse-ID and split it into its **name** and **host** you can do something similar to the following:
+
+```golang
+import "github.com/reiver/go-fediverseid"
+
+// ...
+
+fediverseID, err := fediverseid.ParseFediverseID("@joeblow@host.example")
+if nil != err {
+	fmt.Printf("ERROR: problem parsing fediverse-id: %s\n", err)
+	return
+}
+
+name, found := fediverseID.Name()
+if !found {
+	fmt.Println("ERROR: missing name")
+	return
+}
+
+host, found := fediverseID.Host()
+if !found {
+	fmt.Println("ERROR: missing host")
+	return
+}
+```
+
+And, to generate a Fediverse-ID from a **name** and a **host** you can do something similar to the following:
+
+```golang
+import "github.com/reiver/go-fediverseid"
+
+// ...
+
+var fediverseID fediverseid.FediverseID
+
+fediverseID.SetName("joeblow")
+fediverseID.SetHost("host.example")
+
+var serializedFediverseID string = fediverseID.String()
+```
+
 ## Import
 
 To import package **fediverseid** use `import` code like the following:
