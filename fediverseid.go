@@ -28,6 +28,9 @@ type FediverseID struct {
 	host  opt.Optional[string]
 }
 
+var _ fmt.Stringer = FediverseID{}
+var _ fmt.GoStringer = FediverseID{}
+
 // CreateFediverseID creates a [FediverseID].
 //
 // For example:
