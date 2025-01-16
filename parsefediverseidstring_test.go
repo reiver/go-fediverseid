@@ -6,7 +6,7 @@ import (
 	"github.com/reiver/go-fediverseid"
 )
 
-func TestParseFediverseID(t *testing.T) {
+func TestParseFediverseIDString(t *testing.T) {
 
 	tests := []struct{
 		Value string
@@ -35,7 +35,7 @@ func TestParseFediverseID(t *testing.T) {
 
 	for testNumber, test := range tests {
 
-		actual, err := fediverseid.ParseFediverseID(test.Value)
+		actual, err := fediverseid.ParseFediverseIDString(test.Value)
 		if nil != err {
 			t.Errorf("For test #%d, did not expect an error but actually got one.", testNumber)
 			t.Logf("ERROR: (%T) %s", err, err)

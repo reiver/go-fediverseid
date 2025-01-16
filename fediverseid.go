@@ -61,14 +61,14 @@ func EmptyFediverseID() FediverseID {
 	return FediverseID{}
 }
 
-// ParseFediverseID parses a string and (if value) returns a [FediverseID].
+// ParseFediverseIDString parses a string and (if value) returns a [FediverseID].
 //
 // For example:
 //
 //	var value string = "@joeblow@host.example"
 //	
-//	fediverseid.ParseFediverseID(value)
-func ParseFediverseID(id string) (FediverseID, error) {
+//	fediverseid.ParseFediverseIDString(value)
+func ParseFediverseIDString(id string) (FediverseID, error) {
 	if "" == id {
 		var nada FediverseID
 		return nada, errEmptyFediverseID
