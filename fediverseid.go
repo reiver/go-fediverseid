@@ -4,6 +4,7 @@ import (
 	"encoding"
 	"fmt"
 	"strings"
+	"unsafe"
 
 	"github.com/reiver/go-erorr"
 	"github.com/reiver/go-opt"
@@ -59,6 +60,17 @@ func NewFediverseID(name string, host string) *FediverseID {
 //	fid := fediverseid.EmptyFediverseID()
 func EmptyFediverseID() FediverseID {
 	return FediverseID{}
+}
+
+func ParseFediverseIDBytes(id []byte) (FediverseID, error) {
+	if len(id) <= 0 {
+		var nada FediverseID
+		return nada, errEmptyFediverseID
+	}
+
+	var str string = unsafe.String(unsafe.SliceData(id), len(id))
+
+	return ParseFediverseIDString(str)
 }
 
 // ParseFediverseIDString parses a string and (if value) returns a [FediverseID].
