@@ -1,6 +1,7 @@
 package fediverseid
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/reiver/go-erorr"
@@ -40,6 +41,11 @@ func CreateFediverseID(name string, host string) FediverseID {
 		name: opt.Something(name),
 		host: opt.Something(host),
 	}
+}
+
+func NewFediverseID(name string, host string) *FediverseID {
+	fid := CreateFediverseID(name, host)
+	return &fid
 }
 
 // EmptyFediverseID returns an empty [FediverseID].
@@ -95,6 +101,46 @@ func ParseFediverseID(id string) (FediverseID, error) {
 	}, nil
 }
 
+// ChainSetName sets the (raw) 'name' of the [FediverseID], and returns the receiver.
+//
+// This is useful for chaining.
+func (receiver *FediverseID) ChainSetName(value string) *FediverseID {
+	receiver.SetName(value)
+	return receiver
+}
+
+// ChainSetHost sets the (raw) 'host' of the [FediverseID], and returns the receiver.
+//
+// This is useful for chaining.
+func (receiver *FediverseID) ChainSetHost(value string) *FediverseID {
+	receiver.SetHost(value)
+	return receiver
+}
+
+func (receiver *FediverseID) FediverseID() FediverseID {
+	return *receiver
+}
+
+// GoString returns Go code (as a string) that could be used to create this [FediverseID].
+//
+// GoString also makes [FediverseID] fit the [fmt.GoStringer] interface.
+// (Which is used by [fmt.Errorf], [fmt.Fprint], [fmt.Fprintf], [fmt.Fprintln], [fmt.Print], [fmt.Printf], [fmt.Println], and other similar functions, with the "%#v" format.)
+func (receiver FediverseID) GoString() string {
+	name, nameFound := receiver.Name()
+	host, hostFound := receiver.Host()
+
+	switch {
+	case !nameFound && !hostFound:
+		return "fediverseid.EmptyFediverseID()"
+	case !nameFound &&  hostFound:
+		return fmt.Sprintf("new(fediverseid.FediverseID).ChainSetHost(%q).FediverseID()", host)
+	case  nameFound && !hostFound:
+		return fmt.Sprintf("new(fediverseid.FediverseID).ChainSetName(%q).FediverseID()", name)
+	default: // case nameFound && hostFound:
+		return fmt.Sprintf("fediverseid.CreateFediverseID(%q, %q)", name, host)
+	}
+}
+
 // Name returns the (raw) 'name' of a Fediverse-ID.
 func (receiver FediverseID) Name() (string, bool) {
 	return receiver.name.Get()
@@ -115,12 +161,12 @@ func (receiver FediverseID) HostElse(alt string) string {
 	return receiver.host.GetElse(alt)
 }
 
-// SetName sets the (raw) 'name' of a [FediverseID]..
+// SetName sets the (raw) 'name' of the [FediverseID].
 func (receiver *FediverseID) SetName(value string) {
 	receiver.name = opt.Something(value)
 }
 
-// SetHost sets the (raw) 'host' of a [FediverseID]..
+// SetHost sets the (raw) 'host' of the [FediverseID].
 func (receiver *FediverseID) SetHost(value string) {
 	receiver.host = opt.Something(value)
 }
@@ -176,7 +222,7 @@ func (receiver FediverseID) Serialize() (string, error) {
 // Else returns an empty string.
 //
 // String also makes [FediverseID] fit the [fmt.Stringer] interface.
-// (Which is used by [fmt.Errorf], [fmt.Fprint], [fmt.Fprintf], [fmt.Fprintln], [fmt.Print], [fmt.Printf], [fmt.Println], and other similar functios.)
+// (Which is used by [fmt.Errorf], [fmt.Fprint], [fmt.Fprintf], [fmt.Fprintln], [fmt.Print], [fmt.Printf], [fmt.Println], and other similar functions.)
 //
 // See also: [Serialize].
 func (receiver FediverseID) String() string {
