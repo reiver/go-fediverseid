@@ -30,6 +30,8 @@ const (
 // To create a pointer to a FediverseID use [NewFediverseID] or new(fediverseid.FediverseID).
 //
 // To create a FediverseID from a serialized fediverse-id use [ParseFediverseIDBytes] or [ParseFediverseIDString].
+//
+//To serialize a FediverseID (to a string) use [MarshalText] or [String].
 type FediverseID struct {
 	name opt.Optional[string]
 	host  opt.Optional[string]
