@@ -11,12 +11,12 @@ import (
 )
 
 const (
-	errAtSignNotFound       = erorr.Error("fediverseid: at-sign not found")
-	errAtSignPrefixNotFound = erorr.Error("fediverseid: at-sign not found")
 	errBadHost              = erorr.Error("fediverseid: bad host")
 	errEmpty                = erorr.Error("fediverseid: empty")
-	errEmptyFediverseID     = erorr.Error("fediverseid: empty fediverse-id")
 	errEmptyHost            = erorr.Error("fediverseid: empty host")
+	errHostNotFound         = erorr.Error("fediverseid: host not found")
+	errNilReceiver          = erorr.Error("fediverseid: nil receiver")
+	errNotFediverseID       = erorr.Error("fediverseid: not fediverse-id")
 )
 
 // FediverseID represents a Fediverse-ID.
@@ -32,6 +32,7 @@ type FediverseID struct {
 var _ fmt.Stringer = FediverseID{}
 var _ fmt.GoStringer = FediverseID{}
 var _ encoding.TextMarshaler = FediverseID{}
+var _ encoding.TextUnmarshaler = new(FediverseID)
 
 // CreateFediverseID creates a [FediverseID].
 //
@@ -65,7 +66,7 @@ func EmptyFediverseID() FediverseID {
 func ParseFediverseIDBytes(id []byte) (FediverseID, error) {
 	if len(id) <= 0 {
 		var nada FediverseID
-		return nada, errEmptyFediverseID
+		return nada, errNotFediverseID
 	}
 
 	var str string = unsafe.String(unsafe.SliceData(id), len(id))
@@ -83,14 +84,14 @@ func ParseFediverseIDBytes(id []byte) (FediverseID, error) {
 func ParseFediverseIDString(id string) (FediverseID, error) {
 	if "" == id {
 		var nada FediverseID
-		return nada, errEmptyFediverseID
+		return nada, errNotFediverseID
 	}
 
 	{
 		var b0 byte = id[0]
 		if '@' != b0 {
 			var nada FediverseID
-			return nada, errAtSignPrefixNotFound
+			return nada, errNotFediverseID
 		}
 
 		id = id[1:]
@@ -99,7 +100,7 @@ func ParseFediverseIDString(id string) (FediverseID, error) {
 	var atindex int = strings.LastIndexByte(id, '@')
 	if atindex < 0 {
 		var nada FediverseID
-		return nada, errAtSignNotFound
+		return nada, errHostNotFound
 	}
 
 	var host string = id[1+atindex:]
@@ -274,4 +275,18 @@ func (receiver FediverseID) MarshalText() ([]byte, error) {
 	}
 
 	return p, nil
+}
+
+func (receiver *FediverseID) UnmarshalText(text []byte) error {
+	if nil == receiver {
+		return errNilReceiver
+	}
+
+	fid, err := ParseFediverseIDBytes(text)
+	if nil != err {
+		return err
+	}
+
+	*receiver = fid
+	return nil
 }
