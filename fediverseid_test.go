@@ -28,8 +28,9 @@ func TestFediverseID(t *testing.T) {
 			ExpectedName: "joeblow",
 		},
 		{
-			Host:         "host.example",
-			ExpectedHost: "host.example",
+			Host:             "host.example",
+			ExpectedHost:     "host.example",
+			ExpectedString: "@@host.example",
 		},
 
 

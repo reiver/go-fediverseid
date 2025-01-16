@@ -12,6 +12,9 @@ const (
 	errAtSignPrefixNotFound = erorr.Error("fediverseid: at-sign not found")
 	errBadHost              = erorr.Error("fediverseid: bad host")
 	errEmptyFediverseID     = erorr.Error("fediverseid: empty fediverse-id")
+	errEmptyHost            = erorr.Error("fediverseid: empty host")
+	errNameNotFound         = erorr.Error("fediverseid: name not found")
+	errHostNotFound         = erorr.Error("fediverseid: host not found")
 )
 
 // FediverseID represents a Fediverse-ID.
@@ -113,18 +116,18 @@ func (receiver *FediverseID) SetHost(value string) {
 	receiver.host = opt.Something(value)
 }
 
-// String returns the (serialized) Fediverse-ID, if value.
-// Else returns an empty string.
-func (receiver FediverseID) String() string {
+// Serialize returns the (serialized) Fediverse-ID, if valid.
+// Else returns an error.
+//
+// Serialize is similar to [String] except that it returns an error if it is invalid.
+func (receiver FediverseID) Serialize() (string, error) {
 	var name string
 	{
 		var found bool
 		name, found = receiver.name.Get()
 		if !found {
-			return ""
-		}
-		if "" == name {
-			return ""
+			var nada string
+			return nada, errNameNotFound
 		}
 	}
 
@@ -133,15 +136,18 @@ func (receiver FediverseID) String() string {
 		var found bool
 		host, found = receiver.host.Get()
 		if !found {
-			return ""
+			var nada string
+			return nada, errHostNotFound
 		}
 		if "" == host {
-			return ""
+			var nada string
+			return nada, errEmptyHost
 		}
 	}
 	host = strings.ToLower(host)
 	if badHost(host) {
-		return ""
+		var nada string
+		return nada, errBadHost
 	}
 
 	var buffer [256]byte
@@ -154,5 +160,21 @@ func (receiver FediverseID) String() string {
 		p = append(p, host...)
 	}
 
-	return string(p)
+	return string(p), nil
+}
+
+// String returns the (serialized) Fediverse-ID, if valid.
+// Else returns an empty string.
+//
+// String also makes [FediverseID] fit the [fmt.Stringer] interface.
+// (Which is used by [fmt.Errorf], [fmt.Fprint], [fmt.Fprintf], [fmt.Fprintln], [fmt.Print], [fmt.Printf], [fmt.Println], and other similar functios.)
+//
+// See also: [Serialize].
+func (receiver FediverseID) String() string {
+	str, err := receiver.Serialize()
+	if nil != err {
+		return ""
+	}
+
+	return str
 }
