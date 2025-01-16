@@ -95,7 +95,6 @@ func ParseFediverseID(id string) (FediverseID, error) {
 		var nada FediverseID
 		return nada, errBadHost
 	}
-	host = strings.ToLower(host)
 
 	var name string = id[:atindex]
 

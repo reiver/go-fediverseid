@@ -21,7 +21,7 @@ func TestParseFediverseID(t *testing.T) {
 
 		{
 			Value: "@joeblow@EXAMPLE.COM",
-			Expected: fediverseid.CreateFediverseID("joeblow", "example.com"),
+			Expected: fediverseid.CreateFediverseID("joeblow", "EXAMPLE.COM"),
 		},
 		{
 			Value: "@JOEBLOW@example.com",
@@ -29,7 +29,7 @@ func TestParseFediverseID(t *testing.T) {
 		},
 		{
 			Value: "@JOEBLOW@EXAMPLE.COM",
-			Expected: fediverseid.CreateFediverseID("JOEBLOW", "example.com"),
+			Expected: fediverseid.CreateFediverseID("JOEBLOW", "EXAMPLE.COM"),
 		},
 	}
 
