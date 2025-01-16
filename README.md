@@ -43,10 +43,7 @@ import "github.com/reiver/go-fediverseid"
 
 // ...
 
-var fediverseID fediverseid.FediverseID
-
-fediverseID.SetName("joeblow")
-fediverseID.SetHost("host.example")
+fid := fediverseid.CreateFediverseID("joeblow", "host.example")
 
 var serializedFediverseID string = fediverseID.String()
 ```
