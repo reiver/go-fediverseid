@@ -121,6 +121,9 @@ func (receiver *FediverseID) ChainSetHost(value string) *FediverseID {
 }
 
 func (receiver *FediverseID) FediverseID() FediverseID {
+	if nil == receiver {
+		return EmptyFediverseID()
+	}
 	return *receiver
 }
 
@@ -166,11 +169,17 @@ func (receiver FediverseID) HostElse(alt string) string {
 
 // SetName sets the (raw) 'name' of the [FediverseID].
 func (receiver *FediverseID) SetName(value string) {
+	if nil == receiver {
+		return
+	}
 	receiver.name = opt.Something(value)
 }
 
 // SetHost sets the (raw) 'host' of the [FediverseID].
 func (receiver *FediverseID) SetHost(value string) {
+	if nil == receiver {
+		return
+	}
 	receiver.host = opt.Something(value)
 }
 
