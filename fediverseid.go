@@ -42,6 +42,15 @@ func CreateFediverseID(name string, host string) FediverseID {
 	}
 }
 
+// EmptyFediverseID returns an empty [FediverseID].
+//
+// For example:
+//
+//	fid := fediverseid.EmptyFediverseID()
+func EmptyFediverseID() FediverseID {
+	return FediverseID{}
+}
+
 // ParseFediverseID parses a string and (if value) returns a [FediverseID].
 //
 // For example:
