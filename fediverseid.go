@@ -88,9 +88,19 @@ func (receiver FediverseID) Name() (string, bool) {
 	return receiver.name.Get()
 }
 
+// NameElse returns the (raw) 'name' of a Fediverse-ID if defined, else returns 'alt'.
+func (receiver FediverseID) NameElse(alt string) string {
+	return receiver.name.GetElse(alt)
+}
+
 // Host returns the (raw) 'host' of a Fediverse-ID.
 func (receiver FediverseID) Host() (string, bool) {
 	return receiver.host.Get()
+}
+
+// HostElse returns the (raw) 'host' of a Fediverse-ID if defined, else returns 'alt'.
+func (receiver FediverseID) HostElse(alt string) string {
+	return receiver.host.GetElse(alt)
 }
 
 // SetName sets the (raw) 'name' of a [FediverseID]..
