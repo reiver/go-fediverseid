@@ -24,6 +24,12 @@ const (
 // A (serialized) Fediverse-ID looks similar to this:
 //
 //	@joeblow@host.example
+//
+// To create a FediverseID use [CreateFediverseID] or [EmptyFediverseID].
+//
+// To create a pointer to a FediverseID use [NewFediverseID] or new(fediverseid.FediverseID).
+//
+// To create a FediverseID from a serialized fediverse-id use [ParseFediverseIDBytes] or [ParseFediverseIDString].
 type FediverseID struct {
 	name opt.Optional[string]
 	host  opt.Optional[string]
