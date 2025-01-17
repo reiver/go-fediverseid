@@ -31,7 +31,7 @@ const (
 //
 // To create a FediverseID from a serialized fediverse-id use [ParseFediverseIDBytes] or [ParseFediverseIDString].
 //
-//To serialize a FediverseID (to a string) use [MarshalText] or [String].
+//To serialize a FediverseID (to a string) use [FediverseID.MarshalText] or [FediverseID.String].
 type FediverseID struct {
 	name opt.Optional[string]
 	host  opt.Optional[string]
@@ -207,9 +207,9 @@ func (receiver *FediverseID) SetHost(value string) {
 // Serialize returns the (serialized) Fediverse-ID, if valid.
 // Else returns an error.
 //
-// Serialize is similar to [String] except that it returns an error if it is invalid.
+// Serialize is similar to [FediverseID.String] except that it returns an error if it is invalid.
 //
-// Serialize is also similar to [MarshalText] except that is returns a string rather than a []byte.
+// Serialize is also similar to [FediverseID.MarshalText] except that is returns a string rather than a []byte.
 func (receiver FediverseID) Serialize() (string, error) {
 	bytes, err := receiver.MarshalText()
 	if nil != err {
@@ -226,7 +226,7 @@ func (receiver FediverseID) Serialize() (string, error) {
 // String also makes [FediverseID] fit the [fmt.Stringer] interface.
 // (Which is used by [fmt.Errorf], [fmt.Fprint], [fmt.Fprintf], [fmt.Fprintln], [fmt.Print], [fmt.Printf], [fmt.Println], and other similar functions.)
 //
-// See also: [Serialize].
+// See also: [FediverseID.Serialize].
 func (receiver FediverseID) String() string {
 	str, err := receiver.Serialize()
 	if nil != err {
@@ -239,9 +239,9 @@ func (receiver FediverseID) String() string {
 // MarshalText returns the (serialized) Fediverse-ID, if valid.
 // Else returns an error.
 //
-// MarshalText is similar to [Serialize] except that is returns a []byte rather than a string.
+// MarshalText is similar to [FediverseID.Serialize] except that is returns a []byte rather than a string.
 //
-// MarshalText is also similar to [String] except that it returns a []byte and an error if it is invalid.
+// MarshalText is also similar to [FediverseID.String] except that it returns a []byte and an error if it is invalid.
 //
 // MarshalText also makes [FediverseID] fit the [encoding.TextMarshaler] interface.
 // And thus, among other things, is an alternative to [json.Marshaler].
