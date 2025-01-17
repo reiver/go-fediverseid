@@ -314,6 +314,8 @@ func (receiver FediverseID) MarshalText() ([]byte, error) {
 // UnmarshalText unserializes Fediverse-ID, if valid, and sets the value of the receiver to it.
 // Else returns an error.
 //
+// UnmarshalText is similar to [Unserialize] except that it takes a []byte parameter rather than a string parameter.
+//
 // UnmarshalText is similar to [ParseFediverseIDBytes], except UnmarshalText is a method of [FediverseID], where [ParseFediverseIDBytes] is a standalone function.
 // And because UnmarshalText is similar to [ParseFediverseIDBytes], it is also similar to [ParseFediverseIDString].
 //
@@ -325,6 +327,27 @@ func (receiver *FediverseID) UnmarshalText(text []byte) error {
 	}
 
 	fid, err := ParseFediverseIDBytes(text)
+	if nil != err {
+		return err
+	}
+
+	*receiver = fid
+	return nil
+}
+
+// Unserialize unserializes Fediverse-ID, if valid, and sets the value of the receiver to it.
+// Else returns an error.
+//
+// Unserialize is similar to [UnmarshalText] except that it takes a string parameter rather than a []byte parameter.
+//
+// Unserialize is similar to [ParseFediverseIDString], except Unserialize is a method of [FediverseID], where [ParseFediverseIDString] is a standalone function.
+// And because Unserialize is similar to [ParseFediverseIDString], it is also similar to [ParseFediverseIDBytes].
+func (receiver *FediverseID) Unserialize(text string) error {
+	if nil == receiver {
+		return errNilReceiver
+	}
+
+	fid, err := ParseFediverseIDString(text)
 	if nil != err {
 		return err
 	}
