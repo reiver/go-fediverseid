@@ -79,6 +79,16 @@ func EmptyFediverseID() FediverseID {
 	return FediverseID{}
 }
 
+// ParseFediverseIDBytes parses a []byte and (if valid) returns a [FediverseID].
+// If not valid, returns an error.
+//
+// For example:
+//
+//	var value []byte = []byte("@joeblow@host.example")
+//	
+//	fid, err := fediverseid.ParseFediverseIDBytes(value)
+//
+// See also: [ParseFediverseIDString]
 func ParseFediverseIDBytes(id []byte) (FediverseID, error) {
 	if len(id) <= 0 {
 		var nada FediverseID
@@ -90,13 +100,16 @@ func ParseFediverseIDBytes(id []byte) (FediverseID, error) {
 	return ParseFediverseIDString(str)
 }
 
-// ParseFediverseIDString parses a string and (if value) returns a [FediverseID].
+// ParseFediverseIDString parses a string and (if valid) returns a [FediverseID].
+// If not valid, returns an error.
 //
 // For example:
 //
 //	var value string = "@joeblow@host.example"
 //	
-//	fediverseid.ParseFediverseIDString(value)
+//	fid, err := fediverseid.ParseFediverseIDString(value)
+//
+// See also: [ParseFediverseIDBytes]
 func ParseFediverseIDString(id string) (FediverseID, error) {
 	if "" == id {
 		var nada FediverseID
