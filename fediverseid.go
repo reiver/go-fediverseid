@@ -311,6 +311,14 @@ func (receiver FediverseID) MarshalText() ([]byte, error) {
 	return p, nil
 }
 
+// UnmarshalText unserializes Fediverse-ID, if valid, and sets the value of the receiver to it.
+// Else returns an error.
+//
+// UnmarshalText is similar to [ParseFediverseIDBytes], except UnmarshalText is a method of [FediverseID], where [ParseFediverseIDBytes] is a standalone function.
+// And because UnmarshalText is similar to [ParseFediverseIDBytes], it is also similar to [ParseFediverseIDString].
+//
+// UnmarshalText also makes [FediverseID] fit the [encoding.TextUnmarshaler] interface.
+// And thus, among other things, is an alternative to [json.Unmarshaler].
 func (receiver *FediverseID) UnmarshalText(text []byte) error {
 	if nil == receiver {
 		return errNilReceiver
