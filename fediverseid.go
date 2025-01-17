@@ -162,6 +162,11 @@ func (receiver *FediverseID) ChainSetHost(value string) *FediverseID {
 	return receiver
 }
 
+// FediverseID turns a  *[FediverseID] (i.e., a pointer to a [FediverseID]) back into a [FediverseID].
+//
+// For example:
+//
+//	var fid fediveseid.FediverseID = fediveseid.EmptyFediverseID().ChainSetHost("example.com").FediverseID()
 func (receiver *FediverseID) FediverseID() FediverseID {
 	if nil == receiver {
 		return EmptyFediverseID()
