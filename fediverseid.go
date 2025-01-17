@@ -57,6 +57,14 @@ func CreateFediverseID(name string, host string) FediverseID {
 	}
 }
 
+// NewFediverseID returns a new *[FediverseID] with the `name` and `host` specified.
+//
+// For example:
+//
+//	var name string = "joeblow"
+//	var host string = "host.example"
+//	
+//	fid := fediverseid.NewFediverseID(name, host)
 func NewFediverseID(name string, host string) *FediverseID {
 	fid := CreateFediverseID(name, host)
 	return &fid
