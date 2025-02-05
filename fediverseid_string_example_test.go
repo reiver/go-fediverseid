@@ -13,7 +13,7 @@ func ExampleFediverseID_String() {
 
 	fid := fediverseid.CreateFediverseID(name, host)
 
-	var fediverseID string = fid.String()
+	var fediverseID string = fid.String() // <---------
 
 	fmt.Printf("fediverse-id: %s", fediverseID)
 

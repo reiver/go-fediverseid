@@ -13,10 +13,13 @@ func ExampleFediverseID_AcctURI() {
 
 	fid := fediverseid.CreateFediverseID(name, host)
 
-	var acctURI string = fid.AcctURI()
+	var fediverseID string = fid.String()
+	var acctURI string = fid.AcctURI() // <---------
 
+	fmt.Printf("fediverse-id: %s", fediverseID)
 	fmt.Printf("acct-uri: %s", acctURI)
 
 	// Output:
+	// fediverse-id: @joeblow@host.example
 	// acct-uri: acct:joeblow@host.example
 }
