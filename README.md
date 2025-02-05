@@ -2,6 +2,13 @@
 
 Package **fediverseid** implements tools for working with **Fediverse-ID**s, for the Go programming language.
 
+**Fediverse-ID**s look like these:
+
+* `@reiver@mastodon.social`
+* `@joeblow@example.com`
+* `@dariush@host.example`
+* `@malekeh@host.example`
+
 ## Documention
 
 Online documentation, which includes examples, can be found at: http://godoc.org/github.com/reiver/go-fediverseid
