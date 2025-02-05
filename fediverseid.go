@@ -162,6 +162,29 @@ func (receiver *FediverseID) ChainSetHost(value string) *FediverseID {
 	return receiver
 }
 
+func (receiver FediverseID) AcctURI() string {
+	var name string
+	{
+		var found bool
+		name, found = receiver.name.Get()
+		if !found {
+			return ""
+		}
+	}
+
+	var host string
+	{
+		var found bool
+		host, found = receiver.host.Get()
+		if !found {
+			return ""
+		}
+	}
+
+	//@TODO: should handle acct-uri specific escaping.
+	return fmt.Sprintf("acct:%s@%s", name, host)
+}
+
 // FediverseID turns a  *[FediverseID] (i.e., a pointer to a [FediverseID]) back into a [FediverseID].
 //
 // For example:
