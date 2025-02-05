@@ -34,7 +34,7 @@ const (
 //To serialize a FediverseID (to a string) use [FediverseID.MarshalText] or [FediverseID.String].
 type FediverseID struct {
 	name opt.Optional[string]
-	host  opt.Optional[string]
+	host opt.Optional[string]
 }
 
 var _ fmt.Stringer = FediverseID{}
