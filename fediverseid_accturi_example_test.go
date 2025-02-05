@@ -16,8 +16,8 @@ func ExampleFediverseID_AcctURI() {
 	var fediverseID string = fid.String()
 	var acctURI string = fid.AcctURI() // <---------
 
-	fmt.Printf("fediverse-id: %s", fediverseID)
-	fmt.Printf("acct-uri: %s", acctURI)
+	fmt.Printf("fediverse-id: %s\n", fediverseID)
+	fmt.Printf("acct-uri: %s\n", acctURI)
 
 	// Output:
 	// fediverse-id: @joeblow@host.example
