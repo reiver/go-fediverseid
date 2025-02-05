@@ -162,6 +162,8 @@ func (receiver *FediverseID) ChainSetHost(value string) *FediverseID {
 	return receiver
 }
 
+// AcctURI returns the acct-uri equivalent of the [FediverseID].
+// AcctURI returns an empty string ("") if the receiver isn't a valid Fediverse-ID.
 func (receiver FediverseID) AcctURI() string {
 	var name string
 	{
