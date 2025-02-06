@@ -27,12 +27,12 @@ Online documentation, which includes examples, can be found at: http://godoc.org
 Instead, users of Twitter started using them on Twitter as a way of replying to other people on Twitter.
 The Twitter company noticed this, and then (the Twitter company) built this into Twitter.
 
-Twitter users started using **Twitter-IDs** because this convention of putting an at-symbol ("@") in front of someone _handle_ to reply to them already existing on web-based bulletin boards and blogs.
-Although on web-based bulletin boards and blogs, were the `@handle` convention was hyper-links to the post that was being replied to.
+Twitter users started using **Twitter-IDs** because this convention of putting an at-symbol ("@") in front of someone _handle_ to reply to them already existing on blogs, and web-based bulletin boards / forums.
+Although on blogs, and web-based bulletin boards / forums, the `@handle` convention was often hyper-linked to the post that was being replied to.
 
-Some people try to trace a history for **Fediverse-ID**s to e-mail addresses — these people are wrong.
+Some people try to trace a history for **Fediverse-ID**s to e-mail addresses — _these people are wrong_.
 E-Mail addresses are compared to **Fediverse-ID**s as a way of helping people understand what **Fediverse-ID**s are.
-**Fediverse-ID**s origin do **_not_** go back to e-mail addresses.
+The origin of the **Fediverse-ID**s does **_not_** go back to e-mail addresses — it instead goes back to Twitter, blogs, and web-based bulletin boards / forums.
 
 ## Examples
 
