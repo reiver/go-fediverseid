@@ -27,7 +27,7 @@ Online documentation, which includes examples, can be found at: http://godoc.org
 Instead, users of Twitter started using them on Twitter as a way of replying to other people on Twitter.
 The Twitter company noticed this, and then (the Twitter company) built this into Twitter.
 
-Twitter users started using **Twitter-IDs** because this convention of putting an at-symbol ("@") in front of someone _handle_ to reply to them already existing on blogs, and web-based bulletin boards / forums.
+Twitter users started using **Twitter-IDs** because this convention of putting an at-symbol ("@") in front of someone's _handle_ to reply to them already existing on blogs, and web-based bulletin boards / forums.
 Although on blogs, and web-based bulletin boards / forums, the `@handle` convention was often hyper-linked to the post that was being replied to.
 
 Some people try to trace a history for **Fediverse-ID**s to e-mail addresses — _these people are wrong_.
