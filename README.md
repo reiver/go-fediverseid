@@ -43,7 +43,7 @@ import "github.com/reiver/go-fediverseid"
 
 // ...
 
-fediverseID, err := fediverseid.ParseFediverseID("@joeblow@host.example")
+fediverseID, err := fediverseid.ParseFediverseIDString("@joeblow@host.example")
 if nil != err {
 	fmt.Printf("ERROR: problem parsing fediverse-id: %s\n", err)
 	return
